@@ -78,6 +78,11 @@ jobs:
           dotnet restore ./Dotnet.Aws.S3.API
           dotnet publish ./Dotnet.Aws.S3.API -c Release -o ./Dotnet.Aws.S3.API/publish
 
+      - name: Wait for EC2 to be ready
+        run: |
+          echo "Waiting 30s for EC2 to be ready..."
+          sleep 45
+
       - name: Deploy to EC2
         run: |
           echo "$PRIVATE_KEY_BASE64" | base64 --decode > deploy_key.pem
