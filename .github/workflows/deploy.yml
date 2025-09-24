@@ -18,6 +18,9 @@ jobs:
         with:
           dotnet-version: "9.0.203"
 
+      - name: Check .NET version
+        run: dotnet --list-sdks
+
       - name: Build .NET API
         run: |
           dotnet restore ./Dotnet.Aws.S3.API
@@ -62,8 +65,13 @@ jobs:
           echo "PRIVATE_KEY_BASE64=$(terraform output -raw private_key_pem | base64 -w 0)" >> $GITHUB_ENV
         working-directory: ./terraform
 
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.203"
+
       - name: Check .NET version
-        run: dotnet --info
+        run: dotnet --list-sdks
 
       - name: Build and publish .NET API
         run: |
