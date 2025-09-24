@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "9.0.x"
+          dotnet-version: "9.0.203"
 
       - name: Build .NET API
         run: |
@@ -61,6 +61,9 @@ jobs:
           echo "PUBLIC_IP=$(terraform output -raw ec2_public_ip)" >> $GITHUB_ENV
           echo "PRIVATE_KEY_BASE64=$(terraform output -raw private_key_pem | base64 -w 0)" >> $GITHUB_ENV
         working-directory: ./terraform
+
+      - name: Check .NET version
+        run: dotnet --info
 
       - name: Build and publish .NET API
         run: |
